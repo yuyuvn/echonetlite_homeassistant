@@ -1392,7 +1392,7 @@ MISC_OPTIONS = {
 }
 
 MODEL_SPECIFIC_EPC = {
-    "0x8a_0xfe_0x8c_F-VXU90-TM": { # Panasonic F-VXU90-TM
+    "0x8a_Panasonic_0x8c_F-VXU90-TM": { # Panasonic F-VXU90-TM
         0xF1: {
             CONF_NAME: "Humidity setting",
             CONF_ICON: "mdi:air-humidifier",

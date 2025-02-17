@@ -64,7 +64,15 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
                     )
                 )
         manufacturer = entity["echonetlite"]._manufacturer
-        model = entity["echonetlite"]._host_product_code if entity["echonetlite"]._host_product_code else ""
+        if entity["echonetlite"]._host_product_code:
+            model = entity["echonetlite"]._host_product_code
+        else:
+            # Get model from EPC 0x8c (Manufacturer code)
+            model_data = entity["instance"]["getmap"].get(0x8c)
+            if model_data:
+                model = model_data.decode('utf-8')
+            else:
+                model = ""
 
         # Check if model matches any MODEL_SPECIFIC_EPC entries
         model_key = f"0x8a_{manufacturer}_0x8c_{model}"
