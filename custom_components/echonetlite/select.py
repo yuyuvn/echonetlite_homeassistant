@@ -68,25 +68,24 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
             model = entity["echonetlite"]._host_product_code
         else:
             # Get model from EPC 0x8c (Product code)
-            model = await entity["echonetlite"]._instance.getMessage(0x8c)
+            # model = await entity["echonetlite"]._instance.getMessage(0x8c)
+            model = ""
 
         # Check if model matches any MODEL_SPECIFIC_EPC entries
-        model_key = f"0x8a_{manufacturer}_0x8c_{model}"
-        if manufacturer == "Panasonic":
-            _LOGGER.warning(f"Checking model_key: {model_key}")
-        # if model_key in MODEL_SPECIFIC_EPC:
-        #     model_epcs = MODEL_SPECIFIC_EPC[model_key]
-        #     for op_code, epc_data in model_epcs.items():
-        #         if op_code in entity["instance"]["setmap"]:
-        #             entities.append(
-        #                 EchonetSelect(
-        #                     hass,
-        #                     entity["echonetlite"], 
-        #                     config,
-        #                     op_code,
-        #                     epc_data
-        #                 )
-        #             )
+        model_key = f"{manufacturer}_{model}"
+        if model_key in MODEL_SPECIFIC_EPC:
+            model_epcs = MODEL_SPECIFIC_EPC[model_key]
+            for op_code, epc_data in model_epcs.items():
+                if op_code in entity["instance"]["setmap"]:
+                    entities.append(
+                        EchonetSelect(
+                            hass,
+                            entity["echonetlite"], 
+                            config,
+                            op_code,
+                            epc_data
+                        )
+                    )
 
     async_add_entities(entities, True)
 
