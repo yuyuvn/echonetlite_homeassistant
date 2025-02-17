@@ -37,6 +37,7 @@ from .const import (
     TEMP_OPTIONS,
     CONF_BATCH_SIZE_MAX,
     MISC_OPTIONS,
+    MODEL_SPECIFIC_EPC,
 )
 from .config_flow import enumerate_instances, async_discover_newhost, ErrorConnect
 from pychonet.lib.udpserver import UDPServer
