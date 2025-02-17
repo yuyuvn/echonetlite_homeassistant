@@ -546,6 +546,8 @@ class ECHONETConnector:
             _LOGGER.warning(f"update_data for {self._host}: {update_data}")
         if len(update_data) > 0:
             self._update_data.update(update_data)
+        if self._host == "192.168.1.27":
+            _LOGGER.warning(f"_update_data for {self._host}: {self._update_data}")
 
     async def async_update_callback(self, isPush: bool = False):
         await self.async_update_data(kwargs={"no_request": True})
