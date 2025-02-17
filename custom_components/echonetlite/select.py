@@ -68,6 +68,8 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
 
         # Check if model matches any MODEL_SPECIFIC_EPC entries
         model_key = f"0x8a_{manufacturer}_0x8c_{model}"
+        _LOGGER.debug(f"Checking model_key: {model_key}")
+        _LOGGER.debug(f"Available MODEL_SPECIFIC_EPC keys: {list(MODEL_SPECIFIC_EPC.keys())}")
         if model_key in MODEL_SPECIFIC_EPC:
             model_epcs = MODEL_SPECIFIC_EPC[model_key]
             for op_code, epc_data in model_epcs.items():
