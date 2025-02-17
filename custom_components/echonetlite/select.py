@@ -23,7 +23,7 @@ from .const import (
 
 )
 from pychonet.lib.eojx import EOJX_CLASS
-from pychonet.lib.epc_functions import _swap_dict, EPC_SUPER_FUNCTIONS
+from pychonet.lib.epc_functions import _swap_dict
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
             model = entity["echonetlite"]._host_product_code
         else:
             # Get model from EPC 0x8c (Manufacturer code)
-            model_data = await entity["echonetlite"]._instance.EPC_SUPER_FUNCTIONS.get(0x8c, None)
+            model_data = await entity["instance"].getMessage(0x8c)
             if model_data:
                 model = model_data.decode('utf-8')
             else:
