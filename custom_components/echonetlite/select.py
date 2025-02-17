@@ -192,9 +192,16 @@ class EchonetSelect(SelectEntity):
     async def async_select_option(self, option: str):
         self._attr_current_option = option
         self.async_schedule_update_ha_state()
-        if not await self._connector._instance.setMessage(
-            self._code, self._options[option]
-        ):
+        
+        # Add debug logging
+        _LOGGER.warning(f"Setting {self._code} to value: {self._options[option]} (type: {type(self._options[option])})")
+        
+        # Convert list to integer if needed
+        value = self._options[option]
+        if isinstance(value, list) and len(value) == 1:
+            value = value[0]
+        
+        if not await self._connector._instance.setMessage(self._code, value):
             # Restore previous state
             self._attr_current_option = self._connector._update_data.get(self._code)
             self.async_schedule_update_ha_state()
