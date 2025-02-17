@@ -1397,10 +1397,10 @@ MODEL_SPECIFIC_EPC = {
             CONF_NAME: "Humidity setting",
             CONF_ICON: "mdi:air-humidifier",
             TYPE_SELECT: {
-                "High": [0x3C],
-                "Medium": [0x32],
-                "Low": [0x28],
-                "Off": [0x00],
+                "High": 0x3C,
+                "Medium": 0x32,
+                "Low": 0x28,
+                "Off": 0x00,
             },
         }
     }
