@@ -568,8 +568,14 @@ class ECHONETConnector:
             flags += [ENL_INSTANTANEOUS_POWER, ENL_CUMULATIVE_POWER]
         # Get supported EPC_FUNCTIONS in pychonet object class
         _epc_keys = set(self._instance.EPC_FUNCTIONS.keys()) - set(EPC_SUPER.keys())
+        # Add model-specific EPC codes if they exist for this device
+        model_key = f"{self._manufacturer}_{self._host_product_code}"
+        if model_key in MODEL_SPECIFIC_EPC:
+            _epc_custom_keys = MODEL_SPECIFIC_EPC[model_key].keys()
+        else:
+            _epc_custom_keys = []
         for item in self._getPropertyMap:
-            if item in _epc_keys:
+            if item in _epc_keys or item in _epc_custom_keys:
                 flags.append(item)
 
         for value in flags:
