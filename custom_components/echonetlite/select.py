@@ -67,8 +67,8 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
         if entity["echonetlite"]._host_product_code:
             model = entity["echonetlite"]._host_product_code
         else:
-            # Get model from EPC 0x8c (Manufacturer code)
-            model_data = await entity["instance"].getMessage(0x8c)
+            # Get model from EPC 0x8c (Product code)
+            model_data = await entity["echonetlite"]._instance.getMessage(0x8c)
             if model_data:
                 model = model_data.decode('utf-8')
             else:
