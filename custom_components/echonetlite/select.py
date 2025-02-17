@@ -60,7 +60,7 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
                         _enl_op_code_dict,
                     )
                 )
-        manufacturer = hex(entity["echonetlite"]._manufacturer)
+        manufacturer = entity["echonetlite"]._manufacturer
         model = entity["echonetlite"]._host_product_code if entity["echonetlite"]._host_product_code else ""
 
         # Check if model matches any MODEL_SPECIFIC_EPC entries
