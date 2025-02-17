@@ -536,18 +536,16 @@ class ECHONETConnector:
                 # Interval 100ms to next request
                 await asyncio.sleep(0.1)
             batch_data = await self._instance.update(flags, no_request)
+            if self._host == "192.168.1.27":
+                _LOGGER.warning(f"batch_data for {self._host}: {batch_data}")
             if batch_data is not False:
                 if len(flags) == 1:
                     update_data[flags[0]] = batch_data
                 elif isinstance(batch_data, dict):
                     update_data.update(batch_data)
         _LOGGER.debug(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
-        if self._host == "192.168.1.27":
-            _LOGGER.warning(f"update_data for {self._host}: {update_data}")
         if len(update_data) > 0:
             self._update_data.update(update_data)
-        if self._host == "192.168.1.27":
-            _LOGGER.warning(f"_update_data for {self._host}: {self._update_data}")
 
     async def async_update_callback(self, isPush: bool = False):
         await self.async_update_data(kwargs={"no_request": True})
