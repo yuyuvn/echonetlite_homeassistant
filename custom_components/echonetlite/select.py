@@ -23,8 +23,7 @@ from .const import (
 
 )
 from pychonet.lib.eojx import EOJX_CLASS
-from pychonet.lib.epc_functions import _swap_dict
-from pychonet.lib.epc_functions import EPC_SUPER_FUNCTIONS
+from pychonet.lib.epc_functions import _swap_dict, EPC_SUPER_FUNCTIONS
 
 _LOGGER = logging.getLogger(__name__)
 
