@@ -536,13 +536,6 @@ class ECHONETConnector:
                 # Interval 100ms to next request
                 await asyncio.sleep(0.1)
             batch_data = await self._instance.update(flags, no_request)
-            # Check for custom EPC codes (0xf0 and above)
-            custom_epcs = [flag for flag in flags if flag >= 0xf0 and flag <= 0xff]
-            if custom_epcs:
-                for epc in custom_epcs:
-                    response = await self._instance.getMessage(epc)
-                    if response is not False:
-                        update_data[epc] = response
             # TODO: Batch_data return None, we need to find a way to parse raw data
             if batch_data is not False:
                 if len(flags) == 1:
