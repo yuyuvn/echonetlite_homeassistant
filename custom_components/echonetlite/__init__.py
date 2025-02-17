@@ -574,6 +574,7 @@ class ECHONETConnector:
         _epc_keys = set(self._instance.EPC_FUNCTIONS.keys()) - set(EPC_SUPER.keys())
         # Add model-specific EPC codes if they exist for this device
         model_key = f"{self._manufacturer}_{self._host_product_code}"
+        _LOGGER.warning(f"model_key for {self._host}: {model_key}")
         if model_key in MODEL_SPECIFIC_EPC:
             _epc_custom_keys = MODEL_SPECIFIC_EPC[model_key].keys()
         else:
@@ -581,7 +582,6 @@ class ECHONETConnector:
         for item in self._getPropertyMap:
             if item in _epc_keys or item in _epc_custom_keys:
                 flags.append(item)
-        _LOGGER.warning(f"_getPropertyMap for {self._host}: {self._getPropertyMap}")
 
         for value in flags:
             if value in self._getPropertyMap:
