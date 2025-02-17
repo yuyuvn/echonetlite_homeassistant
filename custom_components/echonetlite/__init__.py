@@ -581,15 +581,14 @@ class ECHONETConnector:
         for item in self._getPropertyMap:
             if item in _epc_keys or item in _epc_custom_keys:
                 flags.append(item)
+        _LOGGER.warning(f"_getPropertyMap for {self._host}: {self._getPropertyMap}")
 
-        if self._host == "192.168.1.27":
-            _LOGGER.warning(f"Flags for {self._host}: {flags}")
         for value in flags:
             if value in self._getPropertyMap:
                 self._update_flags_full_list.append(value)
                 self._update_data[value] = None
         if self._host == "192.168.1.27":
-            _LOGGER.warning(f"Flags for {self._host}: {self._update_flags_full_list}")
+            _LOGGER.warning(f"_update_flags_full_list for {self._host}: {self._update_flags_full_list}")
 
         return _prev_update_flags_full_list != self._update_flags_full_list
 
