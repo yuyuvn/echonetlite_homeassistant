@@ -96,6 +96,7 @@ def get_name_by_epc_code(
             unknown = f"({code})"
         name = EPC_CODE.get(jgc, {}).get(jcc, {}).get(code, None)
         if code >= 0xf0 and code <= 0xff:
+            # Custom EPC codes
             name = f"({code})"
         else:
             if name == None:
@@ -541,6 +542,8 @@ class ECHONETConnector:
                 elif isinstance(batch_data, dict):
                     update_data.update(batch_data)
         _LOGGER.debug(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
+        if self._host == "192.168.1.27":
+            _LOGGER.warning(f"update_data for {self._host}: {update_data}")
         if len(update_data) > 0:
             self._update_data.update(update_data)
 
