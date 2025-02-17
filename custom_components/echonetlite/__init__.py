@@ -538,9 +538,6 @@ class ECHONETConnector:
                 elif isinstance(batch_data, dict):
                     update_data.update(batch_data)
         _LOGGER.debug(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
-        if self._host == "192.168.1.27":
-            _LOGGER.warning(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
-            _LOGGER.warning(f"_update_flag_batches: {self._update_flag_batches}")
         if len(update_data) > 0:
             self._update_data.update(update_data)
 
@@ -573,8 +570,7 @@ class ECHONETConnector:
         # Get supported EPC_FUNCTIONS in pychonet object class
         _epc_keys = set(self._instance.EPC_FUNCTIONS.keys()) - set(EPC_SUPER.keys())
         # Add model-specific EPC codes if they exist for this device
-        model_key = f"{self._manufacturer}_{self._host_product_code}"
-        _LOGGER.warning(f"model_key for {self._host}: {model_key}")
+        model_key = f"{self._manufacturer}_{self._host_product_code if self._host_product_code else ''}"
         if model_key in MODEL_SPECIFIC_EPC:
             _epc_custom_keys = MODEL_SPECIFIC_EPC[model_key].keys()
         else:
@@ -587,8 +583,6 @@ class ECHONETConnector:
             if value in self._getPropertyMap:
                 self._update_flags_full_list.append(value)
                 self._update_data[value] = None
-        if self._host == "192.168.1.27":
-            _LOGGER.warning(f"_update_flags_full_list for {self._host}: {self._update_flags_full_list}")
 
         return _prev_update_flags_full_list != self._update_flags_full_list
 
