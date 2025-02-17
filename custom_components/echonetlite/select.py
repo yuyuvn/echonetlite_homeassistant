@@ -71,7 +71,7 @@ async def async_setup_entry(hass, config, async_add_entities, discovery_info=Non
             model = await entity["echonetlite"]._instance.getMessage(0x8c)
 
         # Check if model matches any MODEL_SPECIFIC_EPC entries
-        model_key = f"0x8a_{manufacturer}_0x8c"
+        model_key = f"0x8a_{manufacturer}_0x8c_{model}"
         if manufacturer == "Panasonic":
             _LOGGER.warning(f"Checking model_key: {model_key}")
         # if model_key in MODEL_SPECIFIC_EPC:
