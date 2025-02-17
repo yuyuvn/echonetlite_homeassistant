@@ -18,6 +18,9 @@ from .const import (
     CONF_ICONS,
     TYPE_SELECT,
     NON_SETUP_SINGLE_ENYITY,
+    MODEL_SPECIFIC_EPC,
+    CONF_NAME,
+
 )
 from pychonet.lib.eojx import EOJX_CLASS
 from pychonet.lib.epc_functions import _swap_dict
@@ -136,7 +139,10 @@ class EchonetSelect(SelectEntity):
             if self._connector._user_options[code] is not False:
                 self._attr_options = self._connector._user_options[code]
         self._attr_current_option = self._connector._update_data.get(self._code)
-        self._attr_name = f"{config.title} {get_name_by_epc_code(self._connector._eojgc,self._connector._eojcc,self._code)}"
+        if CONF_NAME in options:
+            self._attr_name = f"{config.title} {options[CONF_NAME]}"
+        else:
+            self._attr_name = f"{config.title} {get_name_by_epc_code(self._connector._eojgc,self._connector._eojcc,self._code)}"
         self._attr_unique_id = (
             f"{self._connector._uidi}-{self._code}"
             if self._connector._uidi
