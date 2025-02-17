@@ -538,8 +538,7 @@ class ECHONETConnector:
                 elif isinstance(batch_data, dict):
                     update_data.update(batch_data)
         _LOGGER.debug(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
-        if self._manufacturer == "Panasonic":
-            _LOGGER.warning(f"_host: {self._host}")
+        if self._host == "192.168.1.27":
             _LOGGER.warning(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
             _LOGGER.warning(f"_update_flag_batches: {self._update_flag_batches}")
         if len(update_data) > 0:
@@ -583,10 +582,14 @@ class ECHONETConnector:
             if item in _epc_keys or item in _epc_custom_keys:
                 flags.append(item)
 
+        if self._host == "192.168.1.27":
+            _LOGGER.warning(f"Flags for {self._host}: {flags}")
         for value in flags:
             if value in self._getPropertyMap:
                 self._update_flags_full_list.append(value)
                 self._update_data[value] = None
+        if self._host == "192.168.1.27":
+            _LOGGER.warning(f"Flags for {self._host}: {self._update_flags_full_list}")
 
         return _prev_update_flags_full_list != self._update_flags_full_list
 
