@@ -536,8 +536,7 @@ class ECHONETConnector:
                 # Interval 100ms to next request
                 await asyncio.sleep(0.1)
             batch_data = await self._instance.update(flags, no_request)
-            if self._host == "192.168.1.27":
-                _LOGGER.warning(f"batch_data for {self._host}: {batch_data}")
+            # TODO: Batch_data return None, we need to find a way to parse raw data
             if batch_data is not False:
                 if len(flags) == 1:
                     update_data[flags[0]] = batch_data
