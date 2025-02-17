@@ -537,8 +537,11 @@ class ECHONETConnector:
                     update_data[flags[0]] = batch_data
                 elif isinstance(batch_data, dict):
                     update_data.update(batch_data)
-        _LOGGER.warning(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
-        _LOGGER.warning(f"_update_flag_batches: {self._update_flag_batches}")
+        _LOGGER.debug(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
+        if self._manufacturer == "Panasonic":
+            _LOGGER.warning(f"_host: {self._host}")
+            _LOGGER.warning(polling_update_debug_log(update_data, self._eojgc, self._eojcc))
+            _LOGGER.warning(f"_update_flag_batches: {self._update_flag_batches}")
         if len(update_data) > 0:
             self._update_data.update(update_data)
 
